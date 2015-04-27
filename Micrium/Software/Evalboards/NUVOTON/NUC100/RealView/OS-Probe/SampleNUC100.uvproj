@@ -71,7 +71,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>fromelf --bin ".\obj\@L.axf" --output ".\output\@L.bin"</UserProg1Name>
             <UserProg2Name>fromelf --text -c ".\obj\@L.axf" --output ".\obj\@L.txt"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -473,6 +473,11 @@
               <FileName>dspperf.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\aa\dspperf.c</FilePath>
+            </File>
+            <File>
+              <FileName>Fuc_ph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\aa\Fuc_ph.c</FilePath>
             </File>
           </Files>
         </Group>
