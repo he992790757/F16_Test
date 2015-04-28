@@ -81,7 +81,7 @@
 	#define AD_16
 	#define ONE_SENSOR // THREE_SENSOR 默认3SENSOR 
     #define STD_C608
-	#define ADC_CHECKING		 	// 是否有电流检测
+//	#define ADC_CHECKING		 	// 是否有电流检测
 	#define AD_16_1000PICS 
 	//#define DS1307_ON 			// 不开启时钟
 	#define MACHINE_TYPE	"AD-16" 
@@ -433,6 +433,7 @@ typedef struct
 	uint16_t   Signtotal ;     // 照片总数 
 	uint8_t	   Local_SignOutCount_Flag;  
 	uint8_t  XyZoom[3]	;
+	uint8_t  testfile; 
 }SYSTEM ; 
 
 APP_EXT SYSTEM System; 

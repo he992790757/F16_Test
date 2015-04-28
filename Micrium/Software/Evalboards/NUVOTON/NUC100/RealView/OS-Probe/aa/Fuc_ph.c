@@ -10,95 +10,113 @@
 #include "config.h"
 #include "DrvUSB.h"			
 #include "V6MDebug.h"
-void SendSence(PH_SENCE *p)
-{
-	System.Uart.CmdFlag = 0x00 ;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0xAA;		
-	while(UART0->FSR.TX_FULL == 1);
-	UART0->DATA = 0x23;
-	while(UART0->FSR.TX_FULL == 1);	   
-	UART0->DATA = 0xA5;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0xA0;	
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0x0E;	
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).length;	
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).sence;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).senceMode;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ISO;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).TG;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = ((*p)).WB1;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).WB2;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).sharpness;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).brightness;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).saturation;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).contrast;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).compress;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).phScale;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).phSize;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).fwdNum; 
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0x47;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0x48;	
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0xAA;			
-}
 
-void SendMode(PH_MODE *p)
+ PH_SENCE  ph_sence[8] =
 {
-	System.Uart.CmdFlag = 0x00 ;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0xAA;		
-	while(UART0->FSR.TX_FULL == 1);
-	UART0->DATA = 0x23;
-	while(UART0->FSR.TX_FULL == 1);	   
-	UART0->DATA = 0xA5;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0xA0;	
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0x0E;	  
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).length;	
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).sence;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).phTotal;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum1;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum2;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum3;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum4;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum5;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum6;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum7;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = (*p).ScNum8;
-	while(UART0->FSR.TX_FULL == 1);		   
-	UART0->DATA = 0xAA;	
-}
+	{
+	 0x0E,	 //	长度
+	 0x01,	 //	场景
+	 0x01,	 //	场景模式
+	 0x08,	 //	ISO
+	 0x12, 	 // 曝光时间
+
+	 0x80,	// //白平衡
+	 0x80, 	//
+
+	 0x6a,	// //锐度
+	 0x80,	// //亮度
+	 0x80, 	// //饱和度
+	 0x80, 	// //对比度
+
+	 0x06, //  //压缩等级
+	 0x01, //  // 照片比例
+	 0x01, //  // 照片大小
+	 0x01, //  // 方向字符
+//	 0, //  // 字符     		
+	}, 
+	{
+	 0x0E,	 //	长度
+	 0x02,	 //	场景
+	 0x02,	 //	场景模式
+	 0x10,	 //	ISO
+	 0x30, 	 // 曝光时间
+
+	 0x48,	// //白平衡
+	 0xC0, 	//
+
+	 0x90,	// //锐度
+	 0x80,	// //亮度
+	 0x80, 	// //饱和度
+	 0x80, 	// //对比度
+
+	 0x06, //  //压缩等级
+	 0x01, //  // 照片比例
+	 0x01, //  // 照片大小
+	 0x01, //  // 方向字符
+//	 0, //  // 字符     		
+	}, 
+	{
+	 0x0E,	 //	长度
+	 0x03,	 //	场景
+	 0x02,	 //	场景模式
+	 0x30,	 //	ISO
+	 0x40, 	 // 曝光时间
+
+	 0x48,	// //白平衡
+	 0xC0, 	//
+
+	 0x90,	// //锐度
+	 0x80,	// //亮度
+	 0x80, 	// //饱和度
+	 0x80, 	// //对比度
+
+	 0x06, //  //压缩等级
+	 0x01, //  // 照片比例
+	 0x01, //  // 照片大小
+	 0x01, //  // 方向字符
+//	 0, //  // 字符   		
+	}, 
+	{
+	 0x0E,	 //	长度
+	 0x04,	 //	场景
+	 0x01,	 //	场景模式
+	 0x30,	 //	ISO
+	 0x32, 	 // 曝光时间
+
+	 0xA0,	// //白平衡
+	 0x70, 	//
+
+	 0xB1,	// //锐度
+	 0x80,	// //亮度
+	 0xA0, 	// //饱和度
+	 0x80, 	// //对比度
+
+	 0x06, //  //压缩等级
+	 0x01, //  // 照片比例
+	 0x01, //  // 照片大小
+	 0x01, //  // 方向字符
+//	 0, //  // 字符     		
+	}, 
+}	;
+
+PH_MODE ph_mode[8] =
+{
+	{
+	 0x0C,		// length ;
+	 0x01,		// sence ; 
+	 0x04,		// phTotal ;
+	 0x01,		// ScNum1; 
+	 0x02,		// ScNum2; 
+	 0x03,		// ScNum3; 
+	 0x04,		// ScNum4; 
+	 0,		// ScNum5; 
+	 0,		// ScNum6; 
+	 0,		// ScNum7; 
+	 0,		// ScNum8; 		
+	}  ,
+
+} ;
+
 
 
 

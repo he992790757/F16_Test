@@ -483,6 +483,13 @@ void KeyDispose()
 	}
 	// 系统软硬件错误
 	SYS_Error();
+	if( System.testfile == 1)
+	{
+		
+		OSTimeDly(200); 
+		CheckMode();  
+		System.testfile = 2 ; 	
+	}
 }
 
 void TESTA()	//正常老化

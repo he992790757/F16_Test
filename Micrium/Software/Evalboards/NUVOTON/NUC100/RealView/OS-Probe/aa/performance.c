@@ -207,6 +207,7 @@ void Photo_SignAndCount()
 		} 
 		PhotographFour();  
 
+
 		System.Process_TakePht  = 1 ; 
 
 
@@ -222,43 +223,49 @@ void Photo_SignAndChk()
 {
 	if(System.Dsp.Mode == CHECK_MODE)
 	{
-		if(System.SignOutCount>=1500)
-		{
-			SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"照片数量到上限,请处理"));
-			return ;
-		}
 
-		if(System.Uart.SdFlag	==0x03)
-		{
-			 SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"卡满,请处理"));
-			 return ; 
-		}
-		System.Process_TakePht  = 0 ; 
-
-		if(System.Dsp.Sensor !=SENSOR1)
-		{	
-			CheckMode(); 
-			OSTimeDly(200);  
-		}
-	 	if(System.Dsp.CheckMode.Zoom != X0)
-		{
-			Check_View_Zoom(X0);
-		}
-		SHOW_SCREENW(0xE8, WcharToChar(L"数据采集中,请稍候...") );	
-	//	PhotographFour_Sign();  	
-//	    System.SignOutCount++ ; 
-
-
-	 	PhotographFour();  	
-	//	Select_Send(0xE9); 
-	//	ShowLeftBtmNum(); 
-		
-		System.Process_TakePht  = 1 ; 
-		if(System.PhotoNum != 4)
-		{
-	 		System.PhotoNum = 4 ; 
-			System.Sys.SaveInfoFlag  = 0x01  ;
-		}
+		   if( System.testfile != 1)
+		   {
+		   	 takePh();
+		   }
+		    
+//		if(System.SignOutCount>=1500)
+//		{
+//			SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"照片数量到上限,请处理"));
+//			return ;
+//		}
+//
+//		if(System.Uart.SdFlag	==0x03)
+//		{
+//			 SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"卡满,请处理"));
+//			 return ; 
+//		}
+//		System.Process_TakePht  = 0 ; 
+//
+//		if(System.Dsp.Sensor !=SENSOR1)
+//		{	
+//			CheckMode(); 
+//			OSTimeDly(200);  
+//		}
+//	 	if(System.Dsp.CheckMode.Zoom != X0)
+//		{
+//			Check_View_Zoom(X0);
+//		}
+//		SHOW_SCREENW(0xE8, WcharToChar(L"数据采集中,请稍候...") );	
+//	//	PhotographFour_Sign();  	
+////	    System.SignOutCount++ ; 
+//
+//
+//	 	PhotographFour();  	
+//	//	Select_Send(0xE9); 
+//	//	ShowLeftBtmNum(); 
+//		
+//		System.Process_TakePht  = 1 ; 
+//		if(System.PhotoNum != 4)
+//		{
+//	 		System.PhotoNum = 4 ; 
+//			System.Sys.SaveInfoFlag  = 0x01  ;
+//		}
 	}
 }
 
@@ -1239,6 +1246,10 @@ void PhotographFour_Sign()
 /*----------------------------------------------------*/	
 		CheckMode();  
 	}	
+}
+void takePh()
+{
+ 	Dsp_Send_Data(0xA5,0xA2,0x02,0x01,D_NON);
 }
 
 void PhotographFour()

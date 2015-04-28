@@ -149,7 +149,7 @@ void PhotographFour_Sign(void) ;
 void  ShowLeftBtmNum(void) ;
 void PhotoNumAdjust(void);
 void XyZoomFuc(void) ;
-
+void takePh(void);
 extern volatile uint8_t DeepCompression ; 
 
 #endif /*_PERFORMANCE_H_*/

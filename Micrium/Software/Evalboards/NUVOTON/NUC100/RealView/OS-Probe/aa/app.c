@@ -29,7 +29,7 @@
 #include "Driver\DrvSYS.h"
 #include "Driver\DrvTIMER.h"
 //#include <stdlib.h>
-
+#include "fuc_ph.h"
 #include "Driver\DrvUSB.h"
 #include "HID_API.h"
 #include "communication.h" 
@@ -163,12 +163,20 @@ void InitStart()
 	Scen_Send(0xF9,0x01);		   
 
     Scen_Send(0xFA,0x01);
+
+	SendSence(&ph_sence[0]);
+	SendSence(&ph_sence[1])	;
+	SendSence(&ph_sence[2])	;
+	SendSence(&ph_sence[3])	;
+
+	SendMode(&ph_mode[0]) ; 
+
 	Local_SignOutCount = 0 ; 
  	System.Key.Value = 0 ; 
 	System.Led.Statu = TOP_WHITE_ON ; 	
 	System.Dsp.Mode = CHECK_MODE; 
 
-	
+	System.testfile = 0 ;
 	System.Dsp.CheckMode.Zoom = X0 ; 
 	System.Dsp.ViewMode.Zoom  = X0 ; 
 	System.Dsp.TF_Mode.t = 0 ; 

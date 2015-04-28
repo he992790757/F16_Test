@@ -25,8 +25,7 @@ typedef  struct
 	uint8_t phScale;    // ÕÕÆ¬±ÈÀý
 	uint8_t phSize;     // ÕÕÆ¬´óÐ¡
 	uint8_t fwdNum;     // ·½Ïò×Ö·û
-	uint8_t *p  ;       // ×Ö·û 
- 	
+//	uint8_t *p  ;       // ×Ö·û 	
 }PH_SENCE; 
 
 typedef struct 
@@ -42,13 +41,12 @@ typedef struct
 	uint8_t ScNum6; 
 	uint8_t ScNum7; 
 	uint8_t ScNum8; 
+
 }PH_MODE; 
 
-_FUC_PH_EXT  PH_SENCE   ph_sence[8]; 
+_FUC_PH_EXT   PH_SENCE   ph_sence[8]; 
 _FUC_PH_EXT  PH_MODE    ph_mode[8]; 
 
-void SendMode(PH_MODE *p);
-void SendSence(PH_SENCE *p);
 
 #endif /*_FUC_PH_H_*/
 
