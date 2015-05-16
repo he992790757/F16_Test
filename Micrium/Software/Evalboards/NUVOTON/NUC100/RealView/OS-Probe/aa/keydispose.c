@@ -755,10 +755,21 @@ void TESTC()
 void TESTD()	   //¡¨≈ƒ¿œªØ≤‚ ‘
 {
 	uint16_t i =0 ;
-	uint8_t	 m = 0 ;
+	uint8_t	 m = 0 ;	
+	OSTimeDly(500); 
 AA:	for(i = 0 ; i <2000; i++)
 	{	
-		PhotographFour();
+	//	PhotographFour();
+    	
+		takePh();
+//		OSTimeDly(500); 
+		while(System.testfile != 1)	OSTimeDly(10); 
+		 
+	 	if( System.testfile == 1)
+		{	OSTimeDly(200);
+			CheckMode();  
+			System.testfile = 2 ; 	
+		}
 		OSTimeDly(200); 
 	} 
 	Light_Init(); 	

@@ -164,12 +164,13 @@ void InitStart()
 
     Scen_Send(0xFA,0x01);
 
-	SendSence(&ph_sence[0]);
-	SendSence(&ph_sence[1])	;
-	SendSence(&ph_sence[2])	;
-	SendSence(&ph_sence[3])	;
+	SendSence(&ph_sence[0]);  OSTimeDly(20);
+	
+	SendSence(&ph_sence[1])	; OSTimeDly(20);
+	SendSence(&ph_sence[2])	; OSTimeDly(20);
+	SendSence(&ph_sence[3])	; OSTimeDly(20);
 
-	SendMode(&ph_mode[0]) ; 
+	SendMode(&ph_mode[0]) ;   OSTimeDly(20);
 
 	Local_SignOutCount = 0 ; 
  	System.Key.Value = 0 ; 
@@ -363,11 +364,7 @@ void Task1(void *Id)
 
 	InitStart();
 
- 	if(n==1){OSTimeDly(100);	TESTA();  OSTimeDly(100) ; } 	
-	if(n==2){OSTimeDly(100); 	TESTB();  OSTimeDly(100) ; }	
-	if(n==3){OSTimeDly(100);	TESTC();  OSTimeDly(100) ; }	 
-	if(n==4){OSTimeDly(100);	TESTD();  OSTimeDly(100) ; }	
-	if(n==5){OSTimeDly(100);	TESTE();  OSTimeDly(100) ; }	
+
 
 //	GR_DBG_PRINTF("Variable System length %d ",sizeof(System) ); 	
 	TIMER_Configuration(); 
@@ -382,6 +379,12 @@ void Task1(void *Id)
 	}
 	DSP_SENDA(7,&date_dsp[0] ); 
 #endif 
+
+ 	if(n==1){OSTimeDly(100);	TESTA();  OSTimeDly(100) ; } 	
+	if(n==2){OSTimeDly(100); 	TESTB();  OSTimeDly(100) ; }	
+	if(n==3){OSTimeDly(100);	TESTC();  OSTimeDly(100) ; }	 
+	if(n==4){OSTimeDly(100);	TESTD();  OSTimeDly(100) ; }	
+	if(n==5){OSTimeDly(100);	TESTE();  OSTimeDly(100) ; }	
 	for(;;)   
 	{		
 		KeyDispose();	
