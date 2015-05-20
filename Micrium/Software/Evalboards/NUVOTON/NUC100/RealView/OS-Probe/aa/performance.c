@@ -205,10 +205,16 @@ void Photo_SignAndCount()
 		{
 			Local_SignOutCount++ ; 	 
 		} 
-		PhotographFour();  
+	//	PhotographFour();  
 
+		if( System.testfile != 1)
+		{
+		 System.SignOutCount++ ; 
+		 takePh();
+		}
 
 		System.Process_TakePht  = 1 ; 
+
 
 
 	//	OSTimeDly(100); 
@@ -224,48 +230,49 @@ void Photo_SignAndChk()
 	if(System.Dsp.Mode == CHECK_MODE)
 	{
 
+
+		if(System.SignOutCount>=1500)
+		{
+			SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"照片数量到上限,请处理"));
+			return ;
+		}
+
+		if(System.Uart.SdFlag	==0x03)
+		{
+			 SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"卡满,请处理"));
+			 return ; 
+		}
+		System.Process_TakePht  = 0 ; 
+
+		if(System.Dsp.Sensor !=SENSOR1)
+		{	
+			CheckMode(); 
+			OSTimeDly(200);  
+		}
+	 	if(System.Dsp.CheckMode.Zoom != X0)
+		{
+			Check_View_Zoom(X0);
+		}
+		SHOW_SCREENW(0xE8, WcharToChar(L"数据采集中,请稍候...") );	
+//
+	 //	PhotographFour();  	
+
 		   if( System.testfile != 1)
 		   {
+		   	 System.SignOutCount++ ; 
 		   	 takePh();
 		   }
 		    
-//		if(System.SignOutCount>=1500)
-//		{
-//			SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"照片数量到上限,请处理"));
-//			return ;
-//		}
-//
-//		if(System.Uart.SdFlag	==0x03)
-//		{
-//			 SHOW_SCREEN_T_W(0xE3,0x05,WcharToChar(L"卡满,请处理"));
-//			 return ; 
-//		}
-//		System.Process_TakePht  = 0 ; 
-//
-//		if(System.Dsp.Sensor !=SENSOR1)
-//		{	
-//			CheckMode(); 
-//			OSTimeDly(200);  
-//		}
-//	 	if(System.Dsp.CheckMode.Zoom != X0)
-//		{
-//			Check_View_Zoom(X0);
-//		}
-//		SHOW_SCREENW(0xE8, WcharToChar(L"数据采集中,请稍候...") );	
-//	//	PhotographFour_Sign();  	
-////	    System.SignOutCount++ ; 
-//
-//
-//	 	PhotographFour();  	
-//	//	Select_Send(0xE9); 
+
+    	Select_Send(0xE9); 
 //	//	ShowLeftBtmNum(); 
-//		
-//		System.Process_TakePht  = 1 ; 
-//		if(System.PhotoNum != 4)
-//		{
-//	 		System.PhotoNum = 4 ; 
-//			System.Sys.SaveInfoFlag  = 0x01  ;
-//		}
+		
+		System.Process_TakePht  = 1 ; 
+		if(System.PhotoNum != 4)
+		{
+	 		System.PhotoNum = 4 ; 
+			System.Sys.SaveInfoFlag  = 0x01  ;
+		}
 	}
 }
 
@@ -1676,7 +1683,6 @@ void PriorExposure()
 			uint8_t i = 0 ; 	
 			CheckMode(); 
 
-
 			//数据初始化
 			for(i=0;i<30;i++)
 			{
@@ -1756,86 +1762,93 @@ void PriorExposure()
 			ArguPriorExposure()   ;
 			OSTimeDly(200); 
 
-//			//重发 ，第一次可能曝光
-//			DSP_SEND(4, &TW_Snr1EV_FB[0]);
-//      		OSTimeDly(10); 
-//			DSP_SEND(4, &TW_Snr1EV_FC[0]);
-//			OSTimeDly(10); 
-//			Scen_Send(0xD8,0x80) ;
-//			OSTimeDly(10); 
-//			Dsp_Send_Data(0xFF,G_SENCE_WT,0xAF,0x78,D_NON);
-////			Scen_Send(0xD8,0x00) ;
-////			Dsp_Send_Data(0xFF,G_SENCE_WT,0x00,0x00,D_NON);	
-//				
-//				
-//			OSTimeDly(20); 
-
-//			Scen_Send(G_SENCE_WT,0x01 ) ; 
-//			OSTimeDly(300);	
-//		//	OSTimeDly(300);
-//			Scen_Send(0xE6, G_SENCE_WT); 
-//			OSTimeDly(300);
+			//重发 ，第一次可能曝光
+			DSP_SEND(4, &TW_Snr1EV_FB[0]);
+      		OSTimeDly(10); 
+			DSP_SEND(4, &TW_Snr1EV_FC[0]);
+			OSTimeDly(10); 
+			Scen_Send(0xD8,0x80) ;
+			OSTimeDly(10); 
+			Dsp_Send_Data(0xFF,G_SENCE_WT,0xAF,0x78,D_NON);
 //			Scen_Send(0xD8,0x00) ;
-///////////////////////////////////////////////////////
-////			Scen_Send(0xE6, PH_SENCE_R_IR850); 
-////			OSTimeDly(300);
-//			Left_IR850_On();
-//			DSP_SEND(4, &L_IR_Snr1EV_FB[0]);
-//      		OSTimeDly(10); 
-//			DSP_SEND(4, &L_IR_Snr1EV_FC[0]);
-//			OSTimeDly(10); 
-//			Scen_Send(G_SENCE_L_IR,0x01 ) ; 
-//			OSTimeDly(300);	
-//		//	OSTimeDly(300);
-//			Scen_Send(0xE6, G_SENCE_L_IR); 
+//			Dsp_Send_Data(0xFF,G_SENCE_WT,0x00,0x00,D_NON);	
+				
+				
+			OSTimeDly(20); 
+
+			Scen_Send(G_SENCE_WT,0x01 ) ; 
+			OSTimeDly(300);	
+		//	OSTimeDly(300);
+			Scen_Send(0xE6, G_SENCE_WT); 
+			OSTimeDly(300);
+			Scen_Send(0xD8,0x00) ;
+/////////////////////////////////////////////////////
+//			Scen_Send(0xE6, PH_SENCE_R_IR850); 
 //			OSTimeDly(300);
-/////////////////////////////////////////////////////////////////
-//			Top_IR940_On();
-//			OSTimeDly(100); 
-//
-//			Dsp_Send_Data(0xFF,G_SENCE_T_IR940,0x50,0xD1,D_NON);
-//
-//////			DSP_SEND(4, &IR940_Snr1EV_FB[0]);
-//////      		OSTimeDly(10); 
-//////			DSP_SEND(4, &IR940_Snr1EV_FC[0]);
-//////			OSTimeDly(100); 
-//////			Scen_Send(G_SENCE_T_IR940,0x03 ) ; 
-//			OSTimeDly(300);	
-//		//	OSTimeDly(300);
-//			Scen_Send(0xE6, G_SENCE_T_IR940); 
-//			OSTimeDly(300);
+			Left_IR850_On();
+			DSP_SEND(4, &L_IR_Snr1EV_FB[0]);
+      		OSTimeDly(10); 
+			DSP_SEND(4, &L_IR_Snr1EV_FC[0]);
+			OSTimeDly(10); 
+			Scen_Send(G_SENCE_L_IR,0x01 ) ; 
+			OSTimeDly(300);	
+		//	OSTimeDly(300);
+			Scen_Send(0xE6, G_SENCE_L_IR); 
+			OSTimeDly(300);
+///////////////////////////////////////////////////////////////
+			Top_IR940_On();
+			OSTimeDly(100); 
+
+			Dsp_Send_Data(0xFF,G_SENCE_T_IR940,0x50,0xD1,D_NON);
+
+////			DSP_SEND(4, &IR940_Snr1EV_FB[0]);
+////      		OSTimeDly(10); 
+////			DSP_SEND(4, &IR940_Snr1EV_FC[0]);
+////			OSTimeDly(100); 
+////			Scen_Send(G_SENCE_T_IR940,0x03 ) ; 
+			OSTimeDly(300);	
+		//	OSTimeDly(300);
+			Scen_Send(0xE6, G_SENCE_T_IR940); 
+			OSTimeDly(300);
 
 /*----------------------------------------------------*/ //紫光
-//		 	Double_UV_On();
-//			OSTimeDly(300);		
-//			Select_Send(0x96);			 
-//			OSTimeDly(10);
-//			Scen_Send(0xE6, G_SENCE_DB_UV); 														
-//			OSTimeDly(600);		
-//		 	Double_UV_On();
-// 
-//			Scen_Send(0x50,0x25 ) ; 
-//			OSTimeDly(10); 
-//			Scen_Send(0xD8,0xF1) ; 	
-//		    Dsp_Send_Data(0xFF,G_SENCE_DB_UV,0xA0,0x70,D_NON);
-//			//OSTimeDly(10); 
-//
-//			DSP_SEND(4, &UV_Snr1EV_FB[0]);
-//      		OSTimeDly(10); 
-//			DSP_SEND(4, &UV_Snr1EV_FC[0]);
-//			OSTimeDly(10); 
-//			Scen_Send(G_SENCE_DB_UV,0x01 ) ; 
-//			OSTimeDly(300);		
-//			
-//			Select_Send(0x96);			 
-//			OSTimeDly(10);
-//			Scen_Send(0xE6, G_SENCE_DB_UV); 														
-//			OSTimeDly(600);	
-//
-//			Scen_Send(0x50,0x01) ;
-//			Scen_Send(0xD8,0x80) ; 	 	
-////			Dsp_Send_Data(0xFF,0x01,0x80,0x80,0x80);
-//			OSTimeDly(10); 
+		 	Double_UV_On();
+			OSTimeDly(300);		
+			Select_Send(0x96);			 
+			OSTimeDly(10);
+			Scen_Send(0xE6, G_SENCE_DB_UV); 														
+			OSTimeDly(600);		
+		 	Double_UV_On();
+ 
+			Scen_Send(0x50,0x25 ) ; 
+			OSTimeDly(10); 
+			Scen_Send(0xD8,0xF1) ; 	
+		    Dsp_Send_Data(0xFF,G_SENCE_DB_UV,0xA0,0x70,D_NON);
+			//OSTimeDly(10); 
+
+			DSP_SEND(4, &UV_Snr1EV_FB[0]);
+      		OSTimeDly(10); 
+			DSP_SEND(4, &UV_Snr1EV_FC[0]);
+			OSTimeDly(10); 
+			Scen_Send(G_SENCE_DB_UV,0x01 ) ; 
+			OSTimeDly(300);		
+			
+			Select_Send(0x96);			 
+			OSTimeDly(10);
+			Scen_Send(0xE6, G_SENCE_DB_UV); 														
+			OSTimeDly(600);	
+
+			Scen_Send(0x50,0x01) ;
+			Scen_Send(0xD8,0x80) ; 	 	
+//			Dsp_Send_Data(0xFF,0x01,0x80,0x80,0x80);
+			OSTimeDly(10); 
+
+			SendSence(&ph_sence[0]);  OSTimeDly(20);	
+			SendSence(&ph_sence[1])	; OSTimeDly(20);
+			SendSence(&ph_sence[2])	; OSTimeDly(20);
+			SendSence(&ph_sence[3])	; OSTimeDly(20);
+			SendMode(&ph_mode[0]) ;   OSTimeDly(20);
+
 
 			CheckMode(); 
 

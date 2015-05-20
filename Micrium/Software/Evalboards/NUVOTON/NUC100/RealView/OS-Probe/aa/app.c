@@ -164,13 +164,6 @@ void InitStart()
 
     Scen_Send(0xFA,0x01);
 
-	SendSence(&ph_sence[0]);  OSTimeDly(20);
-	
-	SendSence(&ph_sence[1])	; OSTimeDly(20);
-	SendSence(&ph_sence[2])	; OSTimeDly(20);
-	SendSence(&ph_sence[3])	; OSTimeDly(20);
-
-	SendMode(&ph_mode[0]) ;   OSTimeDly(20);
 
 	Local_SignOutCount = 0 ; 
  	System.Key.Value = 0 ; 

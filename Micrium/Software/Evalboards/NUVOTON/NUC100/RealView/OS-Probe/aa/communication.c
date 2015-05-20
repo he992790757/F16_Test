@@ -131,7 +131,8 @@ void UART_INT_HANDLE(uint32_t u32IntStatus)
 						case 0 :Light_Init();TOP_W = 0; break ;  //白光 
 						case 1 :Light_Init();TOP_IR940=0; break ;   //红外
 						case 2 :Light_Init();BOT_IR=0; break ;  //透红外
-						case 3 :Light_Init(); 		LEFT_UV=0;	RIGHT_UV=0; System.testfile = 1 ;  break ;  //紫外	  	
+						case 3 :Light_Init(); 	LEFT_UV=0;	RIGHT_UV=0;	 break ; 
+						case 0xFF : System.testfile = 1 ;  break ;  //紫外	  	
 						default :break ;
 					}
 				}
@@ -287,7 +288,7 @@ uint8_t  SendMode(PH_MODE *p)
 	UART0->DATA = (*p).ScNum2;
 	while(UART0->FSR.TX_FULL == 1);		   
 	UART0->DATA = (*p).ScNum3;
-	while(UART0->FSR.TX_FULL == 1);		   
+	while(UART0->FSR.TX_FULL == 1);		   			           
 	UART0->DATA = (*p).ScNum4;
 	while(UART0->FSR.TX_FULL == 1);		   
 	UART0->DATA = (*p).ScNum5;
