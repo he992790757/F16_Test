@@ -485,8 +485,6 @@ void KeyDispose()
 	SYS_Error();
 	if( System.testfile == 1)
 	{
-		
-		OSTimeDly(200); 
 		CheckMode();  
 		System.testfile = 2 ; 	
 	}
