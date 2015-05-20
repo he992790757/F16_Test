@@ -162,7 +162,7 @@ void InitStart()
 
 	Scen_Send(0xF9,0x01);		   
 
-    Scen_Send(0xFA,0x01);
+  Scen_Send(0xFA,0x01);
 
 
 	Local_SignOutCount = 0 ; 

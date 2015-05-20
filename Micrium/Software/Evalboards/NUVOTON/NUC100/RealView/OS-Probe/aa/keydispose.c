@@ -438,6 +438,17 @@ void USbInCheck()
 }
 void KeyDispose()
 {
+	if(System.testfile == 1)
+	{
+		return ;
+	}
+	if( System.testfile == 2) //拍照结束
+	{
+		CheckMode();  
+		System.testfile = 0 ; 	//开始
+		return ; 
+	}
+
 	//翻盖处理跟检测
 	if(BoxOpenCheck()) return ; 
 
@@ -483,11 +494,7 @@ void KeyDispose()
 	}
 	// 系统软硬件错误
 	SYS_Error();
-	if( System.testfile == 1)
-	{
-		CheckMode();  
-		System.testfile = 2 ; 	
-	}
+
 }
 
 void TESTA()	//正常老化
@@ -761,12 +768,12 @@ AA:	for(i = 0 ; i <2000; i++)
     	
 		takePh();
 //		OSTimeDly(500); 
-		while(System.testfile != 1)	OSTimeDly(10); 
+		while(System.testfile != 2)	OSTimeDly(10); 
 		 
-	 	if( System.testfile == 1)
+	 	if( System.testfile == 2)
 		{	OSTimeDly(200);
 			CheckMode();  
-			System.testfile = 2 ; 	
+			System.testfile = 0; 	
 		}
 		OSTimeDly(200); 
 	} 

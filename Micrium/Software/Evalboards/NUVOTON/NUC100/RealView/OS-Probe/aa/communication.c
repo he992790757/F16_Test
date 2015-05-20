@@ -126,13 +126,14 @@ void UART_INT_HANDLE(uint32_t u32IntStatus)
 			{
 				if(buffer[2]   == 0xA2)
 				{
+					System.testfile = 1; 
 					switch(buffer[4])
 					{
 						case 0 :Light_Init();TOP_W = 0; break ;  //白光 
 						case 1 :Light_Init();TOP_IR940=0; break ;   //红外
 						case 2 :Light_Init();BOT_IR=0; break ;  //透红外
 						case 3 :Light_Init(); 	LEFT_UV=0;	RIGHT_UV=0;	 break ; 
-						case 0xFF : System.testfile = 1 ;  break ;  //紫外	  	
+						case 0xFF : System.testfile = 2 ;  break ;  //紫外	  	
 						default :break ;
 					}
 				}
